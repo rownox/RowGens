@@ -1,0 +1,4 @@
+name: Generators
+version: '${project.version}'
+main: me.rownox.generators.Generators
+api-version: 1.17
