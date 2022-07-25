@@ -1,7 +1,5 @@
 package me.rownox.generators.Events;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,11 +13,8 @@ public class BlockBreakEvent implements Listener {
         Player p = e.getPlayer();
         Block b = e.getBlock();
 
-        Location loc = b.getLocation();
-        Location centerOfBlock = loc.add(0.5, 0.5, 0.5);
-
         if (b.hasMetadata("PlayerPlaced")) {
-            b.getWorld().dropItemNaturally(centerOfBlock, new ItemStack(b.getType()));
+            p.getInventory().addItem(new ItemStack(b.getType()));
         }
     }
 }
