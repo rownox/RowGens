@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class Generate {
 
-    public static void generate(Player p, int time, Location loc) {
+    public static void generate(Player p, int time, Location loc, String tier) {
 
         int X = loc.getBlockX();
         int Y = loc.getBlockY();
@@ -20,12 +20,14 @@ public class Generate {
         World w = p.getWorld();
         ItemStack coin = new ItemStack(Material.SUNFLOWER);
 
+        p.sendMessage(ChatColor.GREEN + "You placed a " + tier + ChatColor.GREEN + " generator.");
+
         new BukkitRunnable(){
             @Override
             public void run() {
                 Item i = Objects.requireNonNull(w).dropItem(new Location(w, X + 0.5, Y + 1, Z + 0.5), coin);
                 i.setVelocity(new Vector(0, 0, 0));
             }
-        }.runTaskTimer(Generators.getInstance(), 0, time);
+        }.runTaskTimer(Generators.getInstance(), time, time);
     }
 }

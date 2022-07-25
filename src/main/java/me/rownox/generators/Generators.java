@@ -1,5 +1,6 @@
 package me.rownox.generators;
 
+import me.rownox.generators.Events.BlockBreakEvent;
 import me.rownox.generators.Events.BlockPlaceEvent;
 import me.rownox.generators.Events.ItemPickupEvent;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,9 +14,11 @@ public final class Generators extends JavaPlugin {
     @Override
     public void onEnable() {
 
-
+        instance = this;
 
         getServer().getPluginManager().registerEvents(new BlockPlaceEvent(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
+        getServer().getPluginManager().registerEvents(new ItemPickupEvent(), this);
 
         config.addDefault("Vault: ", true);
         config.addDefault("Amount: ", 10);
