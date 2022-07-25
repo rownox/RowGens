@@ -12,9 +12,14 @@ import java.util.Objects;
 
 public class Generate {
 
-    public static void generate(Player p, int time, int X, int Y, int Z) {
-        ItemStack coin = new ItemStack(Material.SUNFLOWER);
+    public static void generate(Player p, int time, Location loc) {
+
+        int X = loc.getBlockX();
+        int Y = loc.getBlockY();
+        int Z = loc.getBlockZ();
         World w = p.getWorld();
+        ItemStack coin = new ItemStack(Material.SUNFLOWER);
+
         new BukkitRunnable(){
             @Override
             public void run() {
