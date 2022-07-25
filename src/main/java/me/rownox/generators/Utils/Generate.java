@@ -9,6 +9,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+
+import static me.rownox.generators.Generators.gens;
 
 public class Generate {
 
@@ -25,8 +28,12 @@ public class Generate {
         new BukkitRunnable(){
             @Override
             public void run() {
-                Item i = Objects.requireNonNull(w).dropItem(new Location(w, X + 0.5, Y + 1, Z + 0.5), coin);
-                i.setVelocity(new Vector(0, 0, 0));
+                if (gens.containsKey(loc.getBlock().getType())) {
+                    Item i = Objects.requireNonNull(w).dropItem(new Location(w, X + 0.5, Y + 1, Z + 0.5), coin);
+                    i.setVelocity(new Vector(0, 0, 0));
+                } else {
+                    cancel();
+                }
             }
         }.runTaskTimer(Generators.getInstance(), time, time);
     }
