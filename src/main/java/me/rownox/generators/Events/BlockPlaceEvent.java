@@ -1,11 +1,13 @@
 package me.rownox.generators.Events;
 
+import me.rownox.generators.Generators;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import static me.rownox.generators.Utils.Generate.generate;
 
@@ -30,5 +32,7 @@ public class BlockPlaceEvent implements Listener {
         } else if (blockMat.equals(Material.PURPLE_STAINED_GLASS)) {
             generate(p, 120, loc);
         }
+
+        block.setMetadata("PlayerPlaced", new FixedMetadataValue(Generators.getInstance(), true));
     }
 }
