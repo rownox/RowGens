@@ -1,13 +1,18 @@
 package me.rownox.generators;
 
 import me.rownox.generators.Events.*;
+import me.rownox.generators.Utils.Generator;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 public final class Generators extends JavaPlugin {
@@ -18,35 +23,37 @@ public final class Generators extends JavaPlugin {
     public static Generators instance;
     public FileConfiguration config = this.getConfig();
 
-    public static HashMap<Material, Integer> gens = new HashMap<>();
+    public static final List<Generator> generators = new ArrayList<>(Arrays.asList(
+            new Generator(200, 100, "Tier I", Material.WHITE_STAINED_GLASS),
+            new Generator(180, 300, "Tier II", Material.CYAN_STAINED_GLASS),
+            new Generator(160, 500, "Tier III", Material.RED_STAINED_GLASS),
+            new Generator(140, 700, "Tier IV", Material.LIME_STAINED_GLASS),
+            new Generator(120, 900, "Tier V", Material.PURPLE_STAINED_GLASS)
+    ));
 
     @Override
     public void onEnable() {
-
         instance = this;
 
-        getServer().getPluginManager().registerEvents(new BlockPlaceEvent(), this);
-        getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
-        getServer().getPluginManager().registerEvents(new ItemPickupEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractEvent(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
+        registerListener(new BlockPlaceEvent());
+        registerListener(new BlockBreakEvent());
+        registerListener(new ItemPickupEvent());
+        registerListener(new PlayerInteractEvent());
+        registerListener(new InventoryClick());
 
-        config.addDefault("Amount: ", 10);
+        config.addDefault("amount", 10);
         config.options().copyDefaults(true);
         saveConfig();
-
-        gens.put(Material.WHITE_STAINED_GLASS, 200);
-        gens.put(Material.CYAN_STAINED_GLASS, 180);
-        gens.put(Material.RED_STAINED_GLASS, 160);
-        gens.put(Material.LIME_STAINED_GLASS, 140);
-        gens.put(Material.PURPLE_STAINED_GLASS, 120);
 
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+    }
 
+    public void registerListener(Listener listener) {
+        getServer().getPluginManager().registerEvents(listener, this);
     }
 
     @Override
