@@ -3,7 +3,6 @@ package me.rownox.generators.Utils;
 import me.rownox.generators.Generators;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -1,14 +1,14 @@
 package me.rownox.generators;
 
 import me.rownox.generators.Events.*;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.milkbowl.vault.economy.Economy;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 public final class Generators extends JavaPlugin {
 
