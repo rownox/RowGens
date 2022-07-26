@@ -48,6 +48,14 @@ public class Generate {
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             if (b.getType().equals(Material.WHITE_STAINED_GLASS)) {
                 b.setType(Material.CYAN_STAINED_GLASS);
+            } else if (b.getType().equals(Material.CYAN_STAINED_GLASS)) {
+                b.setType(Material.CYAN_STAINED_GLASS);
+            } else if (b.getType().equals(Material.RED_STAINED_GLASS)) {
+                b.setType(Material.CYAN_STAINED_GLASS);
+            } else if (b.getType().equals(Material.LIME_STAINED_GLASS)) {
+                b.setType(Material.CYAN_STAINED_GLASS);
+            } else if (b.getType().equals(Material.PURPLE_STAINED_GLASS)) {
+                b.setType(Material.CYAN_STAINED_GLASS);
             }
         } else {
             p.sendMessage(ChatColor.RED + "You don't have enough money to upgrade.");

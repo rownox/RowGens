@@ -31,7 +31,6 @@ public final class Generators extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerInteractEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
 
-        config.addDefault("Vault: ", true);
         config.addDefault("Amount: ", 10);
         config.options().copyDefaults(true);
         saveConfig();

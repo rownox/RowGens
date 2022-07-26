@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import static me.rownox.generators.Generators.gens;
+
 public class BlockBreakEvent implements Listener {
 
     @EventHandler
@@ -15,7 +17,7 @@ public class BlockBreakEvent implements Listener {
         Player p = e.getPlayer();
         Block b = e.getBlock();
 
-        if (b.hasMetadata("PlayerPlaced")) {
+        if (gens.containsKey(b.getType())) {
             p.getInventory().addItem(new ItemStack(b.getType()));
             p.sendMessage(ChatColor.RED + "You picked up this generator.");
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);

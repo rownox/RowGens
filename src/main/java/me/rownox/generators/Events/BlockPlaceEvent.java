@@ -27,7 +27,5 @@ public class BlockPlaceEvent implements Listener {
             int time = gens.get(blockMat);
             generate(p, time, loc);
         }
-
-        block.setMetadata("PlayerPlaced", new FixedMetadataValue(Generators.getInstance(), true));
     }
 }
