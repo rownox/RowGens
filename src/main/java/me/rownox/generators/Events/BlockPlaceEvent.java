@@ -25,7 +25,7 @@ public class BlockPlaceEvent implements Listener {
 
         if (gens.containsKey(blockMat)) {
             int time = gens.get(blockMat);
-            generate(p, time, loc, ChatColor.WHITE + "" + ChatColor.BOLD + "Tier 1");
+            generate(p, time, loc);
         }
 
         block.setMetadata("PlayerPlaced", new FixedMetadataValue(Generators.getInstance(), true));

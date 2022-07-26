@@ -12,6 +12,8 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import static me.rownox.generators.Generators.getEconomy;
+
 public class ItemPickupEvent implements Listener {
 
     @EventHandler
@@ -23,10 +25,7 @@ public class ItemPickupEvent implements Listener {
             int payment = itemCount * Generators.getInstance().config.getInt("Amount: ");
 
             if (e.getItem().getItemStack().getType() == Material.SUNFLOWER) {
-                if (Generators.getInstance().getConfig().getBoolean("Vault: ")) {
-                    ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                    Bukkit.dispatchCommand(console, "/eco give " + p + " " + payment);
-                }
+                getEconomy().depositPlayer(p, payment);
                 p.sendMessage(ChatColor.DARK_AQUA + "You received " + ChatColor.AQUA + payment);
                 new BukkitRunnable(){
                     public void run(){

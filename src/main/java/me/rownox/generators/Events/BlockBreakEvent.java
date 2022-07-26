@@ -1,5 +1,7 @@
 package me.rownox.generators.Events;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +17,8 @@ public class BlockBreakEvent implements Listener {
 
         if (b.hasMetadata("PlayerPlaced")) {
             p.getInventory().addItem(new ItemStack(b.getType()));
+            p.sendMessage(ChatColor.RED + "You picked up this generator.");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
         }
     }
 }

@@ -2,6 +2,8 @@ package me.rownox.generators.Utils;
 
 import me.rownox.generators.Generators;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -9,13 +11,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
 import static me.rownox.generators.Generators.gens;
+import static me.rownox.generators.Generators.getEconomy;
 
 public class Generate {
 
-    public static void generate(Player p, int time, Location loc, String tier) {
+    public static void generate(Player p, int time, Location loc) {
 
         int X = loc.getBlockX();
         int Y = loc.getBlockY();
@@ -23,7 +25,7 @@ public class Generate {
         World w = p.getWorld();
         ItemStack coin = new ItemStack(Material.SUNFLOWER);
 
-        p.sendMessage(ChatColor.GREEN + "You placed a " + tier + ChatColor.GREEN + " generator.");
+        p.sendMessage(ChatColor.GREEN + "You placed a generator.");
 
         new BukkitRunnable(){
             @Override
@@ -36,5 +38,20 @@ public class Generate {
                 }
             }
         }.runTaskTimer(Generators.getInstance(), time, time);
+    }
+
+    public static void sellGlass(Player p, int price) {
+        Block b = p.getTargetBlock(null, 10);
+        if (getEconomy().has(p, price)) {
+            getEconomy().withdrawPlayer(p, price);
+            p.sendMessage(ChatColor.GREEN + "You upgraded your generator.");
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            if (b.getType().equals(Material.WHITE_STAINED_GLASS)) {
+                b.setType(Material.CYAN_STAINED_GLASS);
+            }
+        } else {
+            p.sendMessage(ChatColor.RED + "You don't have enough money to upgrade.");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+        }
     }
 }
