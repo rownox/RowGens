@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 import static me.rownox.generators.Generators.*;
+import static me.rownox.generators.Utils.SoundUtils.playSound;
 
 public final class Generate {
 
@@ -41,22 +42,23 @@ public final class Generate {
     public static void sellGlass(Player p, int price) {
         Block b = p.getTargetBlock(null, 10);
         if (getEconomy().has(p, price)) {
-            getEconomy().withdrawPlayer(p, price);
-            p.sendMessage(ChatColor.GREEN + "You upgraded your generator.");
-            SoundUtils.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING);
-
-            // Not sure if this is intentional rownox, but they all upgrade to CYAN_STAINED_GLASS
             if (b.getType().equals(Material.WHITE_STAINED_GLASS)) {
                 b.setType(Material.CYAN_STAINED_GLASS);
             } else if (b.getType().equals(Material.CYAN_STAINED_GLASS)) {
-                b.setType(Material.CYAN_STAINED_GLASS);
+                b.setType(Material.RED_STAINED_GLASS);
             } else if (b.getType().equals(Material.RED_STAINED_GLASS)) {
-                b.setType(Material.CYAN_STAINED_GLASS);
+                b.setType(Material.LIME_STAINED_GLASS);
             } else if (b.getType().equals(Material.LIME_STAINED_GLASS)) {
-                b.setType(Material.CYAN_STAINED_GLASS);
+                b.setType(Material.PURPLE_STAINED_GLASS);
             } else if (b.getType().equals(Material.PURPLE_STAINED_GLASS)) {
-                b.setType(Material.CYAN_STAINED_GLASS);
+                p.sendMessage(ChatColor.RED + "You have the max tier generator.");
+                playSound(p, Sound.BLOCK_NOTE_BLOCK_GUITAR);
+                return;
             }
+
+            getEconomy().withdrawPlayer(p, price);
+            p.sendMessage(ChatColor.GREEN + "You upgraded your generator.");
+            playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING);
         } else {
             p.sendMessage(ChatColor.RED + "You don't have enough money to upgrade.");
             SoundUtils.endermanSound(p);

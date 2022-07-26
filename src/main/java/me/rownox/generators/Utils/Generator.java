@@ -26,31 +26,15 @@ public class Generator {
         return time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public int getCost() {
         return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
     }
 
     public String getTier() {
         return tier;
     }
 
-    public void setTier(String tier) {
-        this.tier = tier;
-    }
-
     public Material getMat() {
         return mat;
-    }
-
-    public void setMat(Material mat) {
-        this.mat = mat;
     }
 }

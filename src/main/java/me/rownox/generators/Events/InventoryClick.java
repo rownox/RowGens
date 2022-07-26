@@ -24,15 +24,11 @@ public class InventoryClick implements Listener {
             }
             for (Generator generator : Generators.generators) {
                 if (generator.getMat() == e.getCurrentItem().getType()) {
-                    sellFunc(p, generator.getCost());
+                    sellGlass(p, generator.getCost());
+                    p.closeInventory();
                     break;
                 }
             }
         }
-    }
-
-    public void sellFunc(Player p, int cost) {
-        sellGlass(p, cost);
-        p.closeInventory();
     }
 }
