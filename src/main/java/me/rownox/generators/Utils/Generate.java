@@ -11,10 +11,9 @@ import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
-import static me.rownox.generators.Generators.gens;
-import static me.rownox.generators.Generators.getEconomy;
+import static me.rownox.generators.Generators.*;
 
-public class Generate {
+public final class Generate {
 
     public static void generate(Player p, int time, Location loc) {
 
@@ -29,11 +28,11 @@ public class Generate {
         new BukkitRunnable(){
             @Override
             public void run() {
-                if (gens.containsKey(loc.getBlock().getType())) {
-                    Item i = Objects.requireNonNull(w).dropItem(new Location(w, X + 0.5, Y + 1, Z + 0.5), coin);
-                    i.setVelocity(new Vector(0, 0, 0));
-                } else {
-                    cancel();
+                for (Generator generator : generators) {
+                    if (generator.getMat() == loc.getBlock().getType()) {
+                        Item i = Objects.requireNonNull(w).dropItem(new Location(w, X + 0.5, Y + 1, Z + 0.5), coin);
+                        i.setVelocity(new Vector(0, 0, 0));
+                    }
                 }
             }
         }.runTaskTimer(Generators.getInstance(), time, time);
@@ -44,7 +43,9 @@ public class Generate {
         if (getEconomy().has(p, price)) {
             getEconomy().withdrawPlayer(p, price);
             p.sendMessage(ChatColor.GREEN + "You upgraded your generator.");
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            SoundUtils.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING);
+
+            // Not sure if this is intentional rownox, but they all upgrade to CYAN_STAINED_GLASS
             if (b.getType().equals(Material.WHITE_STAINED_GLASS)) {
                 b.setType(Material.CYAN_STAINED_GLASS);
             } else if (b.getType().equals(Material.CYAN_STAINED_GLASS)) {
@@ -58,7 +59,7 @@ public class Generate {
             }
         } else {
             p.sendMessage(ChatColor.RED + "You don't have enough money to upgrade.");
-            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            SoundUtils.endermanSound(p);
         }
     }
 }

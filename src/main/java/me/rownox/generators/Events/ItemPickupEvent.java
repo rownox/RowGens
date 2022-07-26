@@ -20,7 +20,7 @@ public class ItemPickupEvent implements Listener {
 
             Inventory inv = p.getInventory();
             int itemCount = e.getItem().getItemStack().getAmount();
-            int payment = itemCount * Generators.getInstance().config.getInt("Amount: ");
+            int payment = itemCount * Generators.getInstance().config.getInt("amount");
 
             if (e.getItem().getItemStack().getType() == Material.SUNFLOWER) {
                 getEconomy().depositPlayer(p, payment);

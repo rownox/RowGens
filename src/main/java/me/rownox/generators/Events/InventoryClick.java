@@ -1,10 +1,14 @@
 package me.rownox.generators.Events;
 
+import me.rownox.generators.Generators;
+import me.rownox.generators.Utils.Generator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.util.Map;
 
 import static me.rownox.generators.Utils.Generate.sellGlass;
 
@@ -17,22 +21,18 @@ public class InventoryClick implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
                 return;
-            } else if (e.getCurrentItem().getType().equals(Material.WHITE_STAINED_GLASS)) {
-                sellGlass(p, 100);
-                p.closeInventory();
-            } else if (e.getCurrentItem().getType().equals(Material.CYAN_STAINED_GLASS)) {
-                sellGlass(p, 300);
-                p.closeInventory();
-            } else if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS)) {
-                sellGlass(p, 500);
-                p.closeInventory();
-            } else if (e.getCurrentItem().getType().equals(Material.LIME_STAINED_GLASS)) {
-                sellGlass(p, 700);
-                p.closeInventory();
-            } else if (e.getCurrentItem().getType().equals(Material.PURPLE_STAINED_GLASS)) {
-                sellGlass(p, 900);
-                p.closeInventory();
+            }
+            for (Generator generator : Generators.generators) {
+                if (generator.getMat() == e.getCurrentItem().getType()) {
+                    sellFunc(p, generator.getCost());
+                    break;
+                }
             }
         }
+    }
+
+    public void sellFunc(Player p, int cost) {
+        sellGlass(p, cost);
+        p.closeInventory();
     }
 }
